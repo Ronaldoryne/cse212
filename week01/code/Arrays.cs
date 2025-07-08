@@ -12,8 +12,26 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
-
-        return []; // replace this return statement with your own
+// Handle edge case: if length is 0 or negative, return empty array
+        if (length <= 0)
+        {
+            return new double[0];
+        }
+        
+        // Create array to store the multiples
+        double[] multiples = new double[length];
+        
+        // Generate multiples using a loop
+        // Loop from 1 to length (inclusive) to get 1st, 2nd, 3rd... multiples
+        for (int i = 1; i <= length; i++)
+        {
+            // Calculate the multiple: number × current_position
+            // Store in array at index (i-1) since array is 0-indexed
+            multiples[i - 1] = number * i;
+        }
+        
+        return multiples;
+        // TODO Problem 1 End
     }
 
     /// <summary>
@@ -29,5 +47,38 @@ public static class Arrays
         // Remember: Using comments in your program, write down your process for solving this problem
         // step by step before you write the code. The plan should be clear enough that it could
         // be implemented by another person.
+        // Handle edge cases
+        if (data == null || data.Count == 0 || amount == 0)
+        {
+            return; // Nothing to rotate
+        }
+        
+        // Handle case where amount equals list size (full rotation = no change)
+        if (amount == data.Count)
+        {
+            return; // List remains the same after full rotation
+        }
+        
+        // Calculate the split point
+        // If we rotate right by 'amount', the split point is at (data.Count - amount)
+        int splitIndex = data.Count - amount;
+        
+        // Extract the two parts using GetRange
+        // Left part: from beginning to split point (these will move to the back)
+        List<int> leftPart = data.GetRange(0, splitIndex);
+        
+        // Right part: from split point to end (these will move to the front)
+        List<int> rightPart = data.GetRange(splitIndex, amount);
+        
+        // Clear the original list
+        data.Clear();
+        
+        // Add the right part first (moves to front)
+        data.AddRange(rightPart);
+        
+        // Add the left part second (moves to back)
+        data.AddRange(leftPart);
+        
+        // TODO Problem 2 End
     }
 }
