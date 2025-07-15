@@ -37,25 +37,23 @@ public class TakingTurnsQueue
         {
             throw new InvalidOperationException("No one in the queue.");
         }
-        else
-        {
-            Person person = _people.Dequeue();
-            
-            // Check if person has infinite turns (0 or negative) OR still has turns remaining
-            if (person.Turns <= 0 || person.Turns > 1)
-            {
-                // Only decrement turns if they are positive (finite turns)
-                if (person.Turns > 0)
-                {
-                    person.Turns -= 1;
-                }
-                // Re-enqueue the person (infinite turns keep original value, finite turns are decremented)
-                _people.Enqueue(person);
-            }
-            // If person.Turns == 1, they don't get re-enqueued (this was their last turn)
 
-            return person;
+        Person person = _people.Dequeue();
+        
+        // If person has infinite turns (0 or negative), they go back to queue with original turns
+        if (person.Turns <= 0)
+        {
+            _people.Enqueue(person);
         }
+        // If person has more than 1 turn, decrement and put back in queue
+        else if (person.Turns > 1)
+        {
+            person.Turns -= 1;
+            _people.Enqueue(person);
+        }
+        // If person has exactly 1 turn, they don't go back in queue (this is their last turn)
+        
+        return person;
     }
 
     public override string ToString()
