@@ -1,4 +1,4 @@
-public static class Trees
+public static class Trees 
 {
     /// <summary>
     /// Given a sorted list (sorted_list), create a balanced BST.  If the values in the
@@ -12,6 +12,7 @@ public static class Trees
     public static BinarySearchTree CreateTreeFromSortedList(int[] sortedNumbers)
     {
         var bst = new BinarySearchTree(); // Create an empty BST to start with 
+
         InsertMiddle(sortedNumbers, 0, sortedNumbers.Length - 1, bst);
         return bst;
     }
@@ -28,7 +29,7 @@ public static class Trees
     /// 
     /// then the value 30 (index 2 which is the middle) would be added 
     /// to the 'bst' (the insert function in the <see cref="BinarySearchTree"/> can be used
-    /// to do this).   
+    /// to do this).       
     ///
     /// Subsequent recursive calls are made to insert the middle from the values 
     /// before 30 and the values after 30.  If done correctly, the order
@@ -40,7 +41,7 @@ public static class Trees
     ///
     /// The purpose for having the first and last parameters is so that we do 
     /// not need to create new sub-lists when we make recursive calls.  Avoid 
-    /// using list slicing to create sub-lists to solve this problem.    
+    /// using list slicing to create sub-lists to solve this problem.        
     /// </summary>
     /// <param name="sortedNumbers">input numbers that are already sorted</param>
     /// <param name="first">the first index in the sortedNumbers to insert</param>
@@ -48,6 +49,22 @@ public static class Trees
     /// <param name="bst">the BinarySearchTree in which to insert the values</param>
     private static void InsertMiddle(int[] sortedNumbers, int first, int last, BinarySearchTree bst)
     {
-        // TODO Start Problem 5
+        // Problem 5: Create Tree from Sorted List
+        
+        // Base case: if first > last, there are no elements to process
+        if (first > last)
+            return;
+        
+        // Find the middle index
+        int middle = (first + last) / 2;
+        
+        // Insert the middle value into the BST
+        bst.Insert(sortedNumbers[middle]);
+        
+        // Recursively insert the middle of the left half (elements before middle)
+        InsertMiddle(sortedNumbers, first, middle - 1, bst);
+        
+        // Recursively insert the middle of the right half (elements after middle)
+        InsertMiddle(sortedNumbers, middle + 1, last, bst);
     }
 }
